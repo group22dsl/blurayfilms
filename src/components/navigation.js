@@ -11,16 +11,16 @@ function Navigation() {
         </a>
         <ul className="nav-links">
           <li className="nav-item">
-            <a href="/">Now playing</a>
+            <a href="/now-playing">Now playing</a>
           </li>
           <li className="nav-item">
-            <a href="/about">Popular</a>
+            <a href="/popular">Popular</a>
           </li>
           <li className="nav-item">
-            <a href="/services">Top Rated</a>
+            <a href="/top-rated">Top Rated</a>
           </li>
           <li className="nav-item">
-            <a href="/contact">Upcoming</a>
+            <a href="/upcoming">Upcoming</a>
           </li>
         </ul>
       </div>

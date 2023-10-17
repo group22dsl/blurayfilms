@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../App.css';
 import Navigation from './navigation';
 
-function MovieList() {
+function MovieList(props) {
 
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
@@ -23,7 +23,7 @@ function MovieList() {
 
     useEffect(() => {
         const getPopularMovies = async () => {
-            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/gePopularMovies`);
+            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMoviesListByType?searchType=${props.type}`);
             if(data.message) {
               setMovies(data.message.results.filter((item) => item.vote_count > 5));
             }
