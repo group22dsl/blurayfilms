@@ -151,3 +151,56 @@ img {
   opacity: 0.8;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the navigation bar */
+.navbar {
+  background-color: #333; /* Background color for the navigation bar */
+  color: #fff; /* Text color */
+  padding: 10px 0; /* Vertical padding */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between; /* Align the logo and nav links at opposite ends */
+  align-items: center;
+  max-width: 1200px; /* Max width of the container */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-right: 20px; /* Space between navigation items */
+}
+
+.nav-item:last-child {
+  margin-right: 0; /* Remove margin from the last item */
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s; /* Smooth color transition on hover */
+}
+
+.nav-item a:hover {
+  color: #00bcd4; /* Color change on hover */
+}
+

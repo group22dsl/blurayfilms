@@ -3,6 +3,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import MovieDetail from './components/movieDetail';
 import './App.css';
+import Navigation from './components/navigation';
 
 const TMDB_API_KEY = 'c70795663059c39a09b30a48cc301d36';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -34,6 +35,8 @@ function MoviesList() {
 }, []);
 
   return (
+    <>
+    <Navigation/>
     <div className="App">
       <div className="search-bar">
         <input 
@@ -58,6 +61,7 @@ function MoviesList() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

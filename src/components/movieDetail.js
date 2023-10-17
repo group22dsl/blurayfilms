@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import langs from 'langs';
 import '../App.css';
+import Navigation from './navigation';
 
 function MovieDetail() {
 
@@ -45,6 +46,8 @@ function MovieDetail() {
     }, [movieId]);
 
     return (
+        <>
+        <Navigation/>
         <div 
             className="movie-detail" 
             style={{ backgroundImage: `url(${process.env.REACT_APP_TMDB_IMAGE_URL}/original${movie.backdrop_path})` }}
@@ -75,6 +78,7 @@ function MovieDetail() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
