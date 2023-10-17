@@ -12,5 +12,5 @@ npm install
 ```
 
 ```bash
-npm start;
+npm start
 ```
