@@ -14,13 +14,13 @@ function MovieDetail() {
     useEffect(() => {
         const getMovieAdditionalData = async () => {
             if(movie && movie.original_title) {
-                const { data } = await axios.get(`http://localhost:5001/api/getTorrentLink?movieName=${movie.original_title}`);
+                const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getTorrentLink?movieName=${movie.original_title}`);
                 if(data.message) {
                     setTorrentLink(data.message);
                 }
             }
             
-            const { data: trailerKeyData } = await axios.get(`http://localhost:5001/api/getMovieTrailer?movieId=${movieId}`);
+            const { data: trailerKeyData } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMovieTrailer?movieId=${movieId}`);
             if(trailerKeyData.message) {
                 setTrailerKey(trailerKeyData.message);
             }
@@ -30,7 +30,7 @@ function MovieDetail() {
 
     useEffect(() => {
         const fetchSingleMovie = async () => {
-            const { data } = await axios.get(`http://localhost:5001/api/getSingleMovieData?movieId=${movieId}`);
+            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getSingleMovieData?movieId=${movieId}`);
             if(data.message) {
                 setMovie(data.message);
             }
@@ -41,12 +41,12 @@ function MovieDetail() {
     return (
         <div 
             className="movie-detail" 
-            style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})` }}
+            style={{ backgroundImage: `url(${process.env.REACT_APP_TMDB_IMAGE_URL}/original${movie.backdrop_path})` }}
         >
             <div className="movie-overlay"></div>
             <div className="movie-content">
                 <img 
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
+                    src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
                     alt={movie.title} 
                     className="movie-poster"
                 />

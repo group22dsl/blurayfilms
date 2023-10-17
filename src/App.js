@@ -17,7 +17,6 @@ function MoviesList() {
         `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
       );
       const data = await response.json();
-      console.log('dddddddd', data.results);
       setMovies(data.results.filter((item) => item.vote_count > 5));
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -26,7 +25,7 @@ function MoviesList() {
 
   useEffect(() => {
     const getPopularMovies = async () => {
-        const { data } = await axios.get(`http://localhost:5001/api/gePopularMovies`);
+        const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/gePopularMovies`);
         if(data.message) {
           setMovies(data.message.results.filter((item) => item.vote_count > 5));
         }
@@ -48,7 +47,7 @@ function MoviesList() {
         {movies.map(movie => (
           <Link to={`/movie/${movie.id}`} key={movie.id} className="movie">
             <img 
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
+              src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
               alt={movie.title} 
             />
             <div>
