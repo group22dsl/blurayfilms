@@ -2,16 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import langs from 'langs';
 import '../App.css';
 
 function MovieDetail() {
 
     const { id: movieId } = useParams();
     const [movie, setMovie] = useState({});
+    const [languageName, setLanguageName] = useState();
     const [torrentLink, setTorrentLink] = useState();
     const [trailerKey, setTrailerKey] = useState();
 
     useEffect(() => {
+        const languageName = langs.all().find((item) => item['1'] === movie.original_language);
+        if(languageName){
+            setLanguageName(languageName['name']);
+        }
         const getMovieAdditionalData = async () => {
             if(movie && movie.original_title) {
                 const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getTorrentLink?movieName=${movie.original_title}`);
@@ -54,7 +60,7 @@ function MovieDetail() {
                     <h1>{movie.title} - ({movie.release_date ? movie.release_date.split('-')[0] : ''})</h1>
                     <p>{movie.overview}</p>
                     <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10</span>
-                    <span>Language: {movie.vote_average}/10</span>
+                    <span>Language: {languageName ? languageName : movie.original_language}</span>
                     <span>Torrent Link: <a href={torrentLink}>Download torrent magnet here</a></span>
                     {trailerKey && (
                         <iframe 
