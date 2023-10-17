@@ -13,6 +13,9 @@ function MovieDetail() {
     const [languageName, setLanguageName] = useState();
     const [torrentLink, setTorrentLink] = useState();
     const [trailerKey, setTrailerKey] = useState();
+    const [regions, setRegions] = useState([]);
+    const [watchProviders, setWatchProviders] = useState({});
+    const [selectedProviders, setSelectedProviders] = useState({});
 
     useEffect(() => {
         const languageName = langs.all().find((item) => item['1'] === movie.original_language);
@@ -31,6 +34,25 @@ function MovieDetail() {
             if(trailerKeyData.message) {
                 setTrailerKey(trailerKeyData.message);
             }
+
+            const { data: regionsData } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getAvailableRegions`);
+            if(regionsData.message) {
+                const sortedData = regionsData.message.sort((a, b) => {
+                    if (a.english_name < b.english_name) {
+                      return -1;
+                    } else if (a.english_name > b.english_name) {
+                      return 1;
+                    } else {
+                      return 0;
+                    }
+                });
+                setRegions(sortedData);
+            }
+
+            const { data: providersData } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMovieWatchProviders?movieId=${movieId}`);
+            if(providersData.message) {
+                setWatchProviders(providersData.message);
+            }
         }
         getMovieAdditionalData();
     }, [movie]);
@@ -44,6 +66,10 @@ function MovieDetail() {
         };
         fetchSingleMovie();
     }, [movieId]);
+
+    const handleChange = (e) => {
+        setSelectedProviders(watchProviders[e.target.value]);
+    }
 
     return (
         <>
@@ -75,6 +101,70 @@ function MovieDetail() {
                             allowFullScreen>
                         </iframe>
                     )}
+                </div>
+                <div className="movie-stream">
+                   <div className="movie-stream-inside">
+                       <div className="watch-providers-container">
+                            <h2>Watch Providers</h2>
+                            <div class="select-box">
+                                <select class="modern-select" onChange={(e) => handleChange(e)}>
+                                    <option value=''>Select Region</option>
+                                    {regions.map(region => (
+                                        <option value={region.iso_3166_1}>{region.english_name}</option>
+                                    ))}
+                                </select>
+                                <div class="select-icon">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+                            {selectedProviders && selectedProviders["flatrate"] && 
+                                <>
+                                    <h4>For Flat Rate</h4>
+                                    <div className="watch-provider-list">
+                                        {selectedProviders["flatrate"].map((provider) => (
+                                            <div key={provider.provider_name} className="watch-provider">
+                                            <img
+                                                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                                alt={`${provider.provider_name} Logo`}
+                                            />
+                                            </div>
+                                        ))}
+                                    </div>
+                                 </>
+                            }
+                            {selectedProviders && selectedProviders["buy"] && 
+                            <>
+                                <h4>For Buy</h4>
+                                    <div className="watch-provider-list">
+                                    {selectedProviders["buy"].map((provider) => (
+                                        <div key={provider.provider_name} className="watch-provider">
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                            alt={`${provider.provider_name} Logo`}
+                                        />
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                            }
+                             {selectedProviders && selectedProviders["rent"] && 
+                             <>
+                                <h4>For Rent</h4>
+                                <div className="watch-provider-list">
+                                    
+                                {selectedProviders["rent"].map((provider) => (
+                                    <div key={provider.provider_name} className="watch-provider">
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                        alt={`${provider.provider_name} Logo`}
+                                    />
+                                    </div>
+                                ))}
+                                </div>
+                            </>
+                            }
+                        </div>
+                   </div>
                 </div>
             </div>
         </div>
