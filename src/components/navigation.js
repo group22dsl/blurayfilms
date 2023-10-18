@@ -40,26 +40,30 @@ function Navigation() {
           <li className="nav-item">
             <a href="/upcoming">Upcoming</a>
           </li>
-          <li className='nav-item'>
-          <Button
-                    id="qsLoginBtn"
-                    color="primary"
-                    className="btn-margin"
-                    onClick={() => loginWithRedirect()}
-                  >
-                    Login
-                  </Button>
-          </li>
-          <li>
-          <Button
-                    id="qsLogoutBtn"
-                    color="primary"
-                    className="btn-margin"
-                    onClick={() => logoutWithRedirect()}
-                  >
-                    Logout
-                  </Button>
-          </li>
+          {!isAuthenticated && (
+                <li className='nav-item'>
+                <Button
+                          id="loginBtn"
+                          color="primary"
+                          className="btn-margin"
+                          onClick={() => loginWithRedirect()}
+                        >
+                          Login
+                        </Button>
+                </li>
+              )}
+          {isAuthenticated && (
+                <li>
+                <Button
+                          id="logoutBtn"
+                          color="primary"
+                          className="btn-margin"
+                          onClick={() => logoutWithRedirect()}
+                        >
+                          Logout
+                        </Button>
+                </li>
+              )}
         </ul>
       </div>
     </nav>

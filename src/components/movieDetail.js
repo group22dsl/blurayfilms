@@ -5,8 +5,15 @@ import axios from 'axios';
 import langs from 'langs';
 import '../App.css';
 import Navigation from './navigation';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function MovieDetail() {
+
+    const {
+        user,
+        isAuthenticated,
+        loginWithRedirect,
+      } = useAuth0();
 
     const { id: movieId } = useParams();
     const [movie, setMovie] = useState({});
@@ -71,7 +78,10 @@ function MovieDetail() {
         setSelectedProviders(watchProviders[e.target.value]);
     }
 
-    return (
+    return !isAuthenticated ? loginWithRedirect({
+        appState: {
+            returnTo: window.location.pathname
+        }}) : (
         <>
         <Navigation/>
         <div 
