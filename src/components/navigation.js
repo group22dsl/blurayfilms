@@ -1,8 +1,26 @@
 // Navigation.js (React component)
 import React from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import {
+  Button
+} from "reactstrap";
 import '../App.css'; // Import the CSS file
 
 function Navigation() {
+  const {
+    user,
+    isAuthenticated,
+    loginWithRedirect,
+    logout,
+  } = useAuth0();
+
+  const logoutWithRedirect = () =>
+  logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      }
+  });
+
   return (
     <nav className="navbar">
       <div className="container">
@@ -22,6 +40,30 @@ function Navigation() {
           <li className="nav-item">
             <a href="/upcoming">Upcoming</a>
           </li>
+          {!isAuthenticated && (
+                <li className='nav-item'>
+                <Button
+                          id="loginBtn"
+                          color="primary"
+                          className="btn-margin"
+                          onClick={() => loginWithRedirect()}
+                        >
+                          Login
+                        </Button>
+                </li>
+              )}
+          {isAuthenticated && (
+                <li>
+                <Button
+                          id="logoutBtn"
+                          color="primary"
+                          className="btn-margin"
+                          onClick={() => logoutWithRedirect()}
+                        >
+                          Logout
+                        </Button>
+                </li>
+              )}
         </ul>
       </div>
     </nav>
