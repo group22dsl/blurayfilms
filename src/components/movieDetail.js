@@ -6,6 +6,7 @@ import langs from 'langs';
 import '../App.css';
 import Navigation from './navigation';
 import { useAuth0 } from "@auth0/auth0-react";
+import MovieSubtitles from './movieSubtitles';
 
 function MovieDetail() {
 
@@ -182,6 +183,7 @@ function MovieDetail() {
                 </div>
             </div>
         </div>
+        <MovieSubtitles/>
         </>
     );
 }
