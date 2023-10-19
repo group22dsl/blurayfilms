@@ -7,6 +7,9 @@ import '../App.css';
 import Navigation from './navigation';
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieSubtitles from './movieSubtitles';
+import {
+    Button
+  } from "reactstrap";
 
 function MovieDetail() {
 
@@ -24,6 +27,7 @@ function MovieDetail() {
     const [regions, setRegions] = useState([]);
     const [watchProviders, setWatchProviders] = useState({});
     const [selectedProviders, setSelectedProviders] = useState({});
+    const [torrentFiles, setTorrentFiles] = useState([]);
 
     useEffect(() => {
         const languageName = langs.all().find((item) => item['1'] === movie.original_language);
@@ -41,6 +45,11 @@ function MovieDetail() {
             const { data: trailerKeyData } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMovieTrailer?movieId=${movieId}`);
             if(trailerKeyData.message) {
                 setTrailerKey(trailerKeyData.message);
+            }
+
+            const { data: torrentFilesData } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getTorrentsForMovie?movieId=${movie.imdb_id}`);
+            if(torrentFilesData.message) {
+                setTorrentFiles(torrentFilesData.message);
             }
 
             const { data: regionsData } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getAvailableRegions`);
@@ -66,13 +75,6 @@ function MovieDetail() {
     }, [movie]);
 
     useEffect(() => {
-        if (!isLoading && !isAuthenticated) {
-            loginWithRedirect({
-                appState: {
-                    returnTo: window.location.pathname
-                }
-            })
-        }
         const fetchSingleMovie = async () => {
             const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getSingleMovieData?movieId=${movieId}`);
             if(data.message) {
@@ -103,7 +105,7 @@ function MovieDetail() {
                 <div className="movie-text">
                     <h1>{movie.title} - ({movie.release_date ? movie.release_date.split('-')[0] : ''})</h1>
                     <p>{movie.overview}</p>
-                    <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10</span>
+                    <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10 {torrentFiles.length}</span>
                     <span>Language: {languageName ? languageName : movie.original_language}</span>
                     <span>Torrent Link: <a href={torrentLink}>Download torrent magnet here</a></span>
                     {trailerKey && (
@@ -116,20 +118,27 @@ function MovieDetail() {
                             allowFullScreen>
                         </iframe>
                     )}
+                    {!isLoading && !isAuthenticated ? <Button
+                          id="loginBtn"
+                          color="primary"
+                          className="subtitle-login"
+                        >
+                          Click here to <b>login</b> or <b>sign up</b> to download subtitles
+                    </Button> : <MovieSubtitles/>}
                 </div>
                 <div className="movie-stream">
                    <div className="movie-stream-inside">
                        <div className="watch-providers-container">
                             <h2>Watch Providers</h2>
-                            <div class="select-box">
-                                <select class="modern-select" onChange={(e) => handleChange(e)}>
+                            <div className="select-box">
+                                <select className="modern-select" onChange={(e) => handleChange(e)}>
                                     <option value=''>Select Region</option>
                                     {regions.map(region => (
                                         <option value={region.iso_3166_1}>{region.english_name}</option>
                                     ))}
                                 </select>
-                                <div class="select-icon">
-                                    <i class="fas fa-chevron-down"></i>
+                                <div className="select-icon">
+                                    <i className="fas fa-chevron-down"></i>
                                 </div>
                             </div>
                             {selectedProviders && selectedProviders["flatrate"] && 
@@ -179,11 +188,27 @@ function MovieDetail() {
                             </>
                             }
                         </div>
+                        <div className="watch-providers-container">
+                            <h2>Download Movie</h2>
+                            <div className="select-box">
+                                {!isLoading && !isAuthenticated ? <Button
+                                    id="loginBtn"
+                                    color="primary"
+                                    className="subtitle-login"
+                                    >
+                                    Click here to <b>login</b> or <b>sign up</b> to download Movie
+                                </Button>: <div>
+                                        {torrentFiles.map((torrent) => (
+                                        <a href={torrent.url}><Button className="movie-download-button">{torrent.size} {torrent.video_codec} [{torrent.quality}] {torrent.type}</Button></a>
+                                        ))}
+                                </div>}
+                            </div>
+                           
+                        </div>
                    </div>
                 </div>
             </div>
         </div>
-        <MovieSubtitles/>
         </>
     );
 }

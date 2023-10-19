@@ -8,6 +8,7 @@ import '../App.css'; // Import the CSS file
 
 function Navigation() {
   const {
+    isLoading,
     user,
     isAuthenticated,
     loginWithRedirect,
@@ -20,6 +21,8 @@ function Navigation() {
         returnTo: window.location.origin,
       }
   });
+
+  console.log(isLoading, isAuthenticated, user)
 
   return (
     <nav className="navbar">
@@ -40,7 +43,7 @@ function Navigation() {
           <li className="nav-item">
             <a href="/upcoming">Upcoming</a>
           </li>
-          {!isAuthenticated && (
+          {!isLoading && !isAuthenticated ?
                 <li className='nav-item'>
                 <Button
                           id="loginBtn"
@@ -51,19 +54,16 @@ function Navigation() {
                           Login
                         </Button>
                 </li>
-              )}
-          {isAuthenticated && (
-                <li>
-                <Button
-                          id="logoutBtn"
-                          color="primary"
-                          className="btn-margin"
-                          onClick={() => logoutWithRedirect()}
-                        >
-                          Logout
-                        </Button>
-                </li>
-              )}
+              : <li>
+              <Button
+                        id="logoutBtn"
+                        color="primary"
+                        className="btn-margin"
+                        onClick={() => logoutWithRedirect()}
+                      >
+                        Logout
+                      </Button>
+              </li>}
         </ul>
       </div>
     </nav>

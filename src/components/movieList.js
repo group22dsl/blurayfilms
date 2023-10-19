@@ -48,10 +48,10 @@ function MovieList(props) {
                 <Link to={`/movie/${movie.id}`} key={movie.id} className="movie">
                     <img 
                     src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
-                    alt={movie.title} 
+                    alt={movie.title}
                     />
                     <div>
-                    {movie.title}<br/><br/>
+                    {movie.title} ({movie.release_date.split('-')[0]})<br/><br/>
                     <span>IMDB: {movie.vote_average.toFixed(1)}/10</span>
                     </div>
                 </Link>
