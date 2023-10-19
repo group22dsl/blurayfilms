@@ -10,7 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function MovieDetail() {
 
     const {
-        user,
+        isLoading,
         isAuthenticated,
         loginWithRedirect,
       } = useAuth0();
@@ -65,6 +65,13 @@ function MovieDetail() {
     }, [movie]);
 
     useEffect(() => {
+        if (!isLoading && !isAuthenticated) {
+            loginWithRedirect({
+                appState: {
+                    returnTo: window.location.pathname
+                }
+            })
+        }
         const fetchSingleMovie = async () => {
             const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getSingleMovieData?movieId=${movieId}`);
             if(data.message) {
@@ -72,16 +79,13 @@ function MovieDetail() {
             }
         };
         fetchSingleMovie();
-    }, [movieId]);
+    }, [movieId, isLoading, isAuthenticated]);
 
     const handleChange = (e) => {
         setSelectedProviders(watchProviders[e.target.value]);
     }
 
-    return !isAuthenticated ? loginWithRedirect({
-        appState: {
-            returnTo: window.location.pathname
-        }}) : (
+    return (
         <>
         <Navigation/>
         <div 

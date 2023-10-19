@@ -7,14 +7,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 
 const App = () => {
-  const { isLoading, error } = useAuth0();
+  const { error } = useAuth0();
 
   if (error) {
     return <div>Oops... {error.message}</div>;
-  }
-
-  if (isLoading) {
-    return false;
   }
 
   return (
