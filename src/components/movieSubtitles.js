@@ -34,7 +34,7 @@ useEffect(() => {
 }, [subtitlesFromApi]);
 
   return (
-    <div>
+    <div className="subtitles-container">
       {Object.entries(subtitlesByLanguage).map(([language, subtitles]) => {
           const languageCode = language.split('-')[0];
          const languageName = langs ? langs.all().find((item) => item['1'] === languageCode) : '';

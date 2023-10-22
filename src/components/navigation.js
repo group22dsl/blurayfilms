@@ -28,7 +28,7 @@ function Navigation() {
     <nav className="navbar">
       <div className="container">
         <a href="/" className="logo">
-          Blurayfilms
+          ikmovies
         </a>
         <ul className="nav-links">
           <li className="nav-item">
@@ -48,7 +48,7 @@ function Navigation() {
                 <Button
                           id="loginBtn"
                           color="primary"
-                          className="btn-margin"
+                          className="btn-margin auth-button"
                           onClick={() => loginWithRedirect()}
                         >
                           Login
@@ -58,7 +58,7 @@ function Navigation() {
               <Button
                         id="logoutBtn"
                         color="primary"
-                        className="btn-margin"
+                        className="btn-margin auth-button"
                         onClick={() => logoutWithRedirect()}
                       >
                         Logout

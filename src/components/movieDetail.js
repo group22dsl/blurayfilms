@@ -97,15 +97,21 @@ function MovieDetail() {
         >
             <div className="movie-overlay"></div>
             <div className="movie-content">
-                <img 
-                    src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
-                    alt={movie.title} 
-                    className="movie-poster"
-                />
+                <div className='poster-content'>
+                    <img 
+                        src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
+                        alt={movie.title} 
+                        className="movie-poster"
+                    />
+                    {/* <div className="movie-details-container">
+                        <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10</span>
+                        <span>Language: {languageName ? languageName : movie.original_language}</span>
+                    </div> */}
+                </div>
                 <div className="movie-text">
                     <h1>{movie.title} - ({movie.release_date ? movie.release_date.split('-')[0] : ''})</h1>
                     <p>{movie.overview}</p>
-                    <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10 {torrentFiles.length}</span>
+                    <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10</span>
                     <span>Language: {languageName ? languageName : movie.original_language}</span>
                     <span>Torrent Link: <a href={torrentLink}>Download torrent magnet here</a></span>
                     {trailerKey && (
@@ -122,6 +128,7 @@ function MovieDetail() {
                           id="loginBtn"
                           color="primary"
                           className="subtitle-login"
+                          onClick={() => loginWithRedirect()}
                         >
                           Click here to <b>login</b> or <b>sign up</b> to download subtitles
                     </Button> : <MovieSubtitles/>}
@@ -195,6 +202,7 @@ function MovieDetail() {
                                     id="loginBtn"
                                     color="primary"
                                     className="subtitle-login"
+                                    onClick={() => loginWithRedirect()}
                                     >
                                     Click here to <b>login</b> or <b>sign up</b> to download Movie
                                 </Button>: <div>
