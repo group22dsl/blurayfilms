@@ -128,7 +128,7 @@ function MovieDetail() {
                           id="loginBtn"
                           color="primary"
                           className="subtitle-login"
-                          onClick={() => loginWithRedirect()}
+                          onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}
                         >
                           Click here to <b>login</b> or <b>sign up</b> to download subtitles
                     </Button> : <MovieSubtitles/>}
@@ -202,7 +202,11 @@ function MovieDetail() {
                                     id="loginBtn"
                                     color="primary"
                                     className="subtitle-login"
-                                    onClick={() => loginWithRedirect()}
+                                    onClick={() => loginWithRedirect({ 
+                                        appState: { 
+                                            returnTo: window.location.pathname 
+                                        } 
+                                    })}
                                     >
                                     Click here to <b>login</b> or <b>sign up</b> to download Movie
                                 </Button>: <div>
