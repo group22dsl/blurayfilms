@@ -19,6 +19,16 @@ function MovieSubtitles() {
     getPopularMovies();
 }, []);
 
+const handleOnclick = async (fileId) => {
+  console.log("values", fileId, movieId);
+  const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getSubtitleDownloadLinkForFile?fileID=${fileId}&movieID=${movieId}`);
+  if(data.message) {
+    window.open(data.message, '_blank');
+  } else {
+    window.alert('You cannot download this subtitle. Please try different file')
+  }
+}
+
 useEffect(() => {
     const subtitlesByLanguage = {};
     subtitlesFromApi.forEach((subtitle) => {
@@ -44,7 +54,7 @@ useEffect(() => {
           <ul className="subtitle-list">
             {subtitles.map((subtitle) => (
               <li key={subtitle.id}>
-                <a className="subtitle-list-element" href={subtitle.attributes.url}>{subtitle.attributes.release}</a>
+                <button className="subtitle-list-element" onClick={() => handleOnclick(subtitle.attributes.files[0].file_id)}>{subtitle.attributes.release}</button>
               </li>
             ))}
           </ul>

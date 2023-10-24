@@ -277,10 +277,15 @@ body {
   border-radius: 10px;
   text-decoration: none;
   padding:10px;
+  border-style: none;
 }
 
 .subtitle-list {
   line-height: 50px;
+}
+
+.subtitle-list li{
+  list-style: none;
 }
 
 .subtitle-login {
