@@ -30,8 +30,8 @@
 .search-bar button {
   padding: 10px 20px;
   border: none;
-  background-color: #1e90ff;
-  color: white;
+  background-color: #47dbfb;
+  color: black;
   font-weight: bold;
   border-radius: 0 20px 20px 0;
   cursor: pointer;
@@ -203,6 +203,7 @@ body {
   font-weight: bold;
   text-decoration: none;
   color: #fff;
+  height: 30px;
 }
 
 .nav-links {
@@ -292,7 +293,7 @@ body {
   font-weight: 500;
   height: 60px;
   font-size: 18px;
-  background-color: #01a3a4;
+  background-color: #47dbfb;
   border-radius: 10px;
   border-style: none;
 }
@@ -310,11 +311,11 @@ body {
 }
 
 .auth-button {
-  background-color: #2e86de;
-  color: white;
+  background-color: #47dbfb;
+  color: black;
   border-style: solid;
   border-width: 2px;
-  border-color: #2e86de;
+  border-color: #47dbfb;
   border-radius: 5px;
 }
 
@@ -331,4 +332,8 @@ body {
   flex-direction: column;
   gap: 25px;
   padding: 20px;
+}
+
+.logo-img {
+  height: 35px;
 }

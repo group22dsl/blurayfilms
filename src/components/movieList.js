@@ -45,7 +45,7 @@ function MovieList(props) {
             </div>
             <div className="movies-list">
                 {movies.map(movie => (
-                <Link to={`/movie/${movie.id}`} key={movie.id} className="movie">
+                <Link to={`/movie/${movie.id}/${movie.title}`} key={movie.id} className="movie">
                     <img 
                     src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
                     alt={movie.title}
