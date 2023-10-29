@@ -28,7 +28,7 @@ function Navigation() {
     <nav className="navbar">
       <div className="container">
         <a href="/" className="logo">
-          ikmovies
+          <img src='/logo.png' className='logo-img'/>
         </a>
         <ul className="nav-links">
           <li className="nav-item">
@@ -51,7 +51,7 @@ function Navigation() {
                           className="btn-margin auth-button"
                           onClick={() => loginWithRedirect()}
                         >
-                          Login
+                          Login / Register
                         </Button>
                 </li>
               : <li>
