@@ -48,18 +48,20 @@ useEffect(() => {
       {Object.entries(subtitlesByLanguage).map(([language, subtitles]) => {
           const languageCode = language.split('-')[0];
          const languageName = langs ? langs.all().find((item) => item['1'] === languageCode) : '';
+         if(languageCode && languageName){
           return (
-        <div key={language}>
-          <h2>{languageName ? languageName["name"] : language} Subtitle files</h2>
-          <ul className="subtitle-list">
-            {subtitles.map((subtitle) => (
-              <li key={subtitle.id}>
-                <button className="subtitle-list-element" onClick={() => handleOnclick(subtitle.attributes.files[0].file_id)}>{subtitle.attributes.release}</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-          )
+            <div key={language}>
+              <h2>{languageName ? languageName["name"] : ''} Subtitle files</h2>
+              <ul className="subtitle-list">
+                {subtitles.map((subtitle) => (
+                  <li key={subtitle.id}>
+                    <button className="subtitle-list-element" onClick={() => handleOnclick(subtitle.attributes.files[0].file_id)}>{subtitle.attributes.release}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+              )
+         }
     })}
     </div>
   );
