@@ -198,22 +198,11 @@ function MovieDetail() {
                         <div className="watch-providers-container">
                             <h2>Download Movie</h2>
                             <div className="select-box">
-                                {!isLoading && !isAuthenticated ? <Button
-                                    id="loginBtn"
-                                    color="primary"
-                                    className="subtitle-login"
-                                    onClick={() => loginWithRedirect({ 
-                                        appState: { 
-                                            returnTo: window.location.pathname 
-                                        } 
-                                    })}
-                                    >
-                                    Click here to <b>login</b> or <b>sign up</b> to download Movie
-                                </Button>: <div>
+                                <div>
                                         {torrentFiles.map((torrent) => (
                                         <a href={torrent.url}><Button className="movie-download-button">{torrent.size} {torrent.video_codec} [{torrent.quality}] {torrent.type}</Button></a>
                                         ))}
-                                </div>}
+                                </div>
                             </div>
                            
                         </div>

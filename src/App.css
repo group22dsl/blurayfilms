@@ -12,7 +12,7 @@
   background-color: #f7f7f7;
   padding: 15px;
   border-radius: 25px;
-  width: 300px;
+  width: 600px;
   margin: 0 auto 40px auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -336,4 +336,9 @@ body {
 
 .logo-img {
   height: 35px;
+}
+
+.load-more-button {
+  height: 60px;
+  width: 500px;
 }

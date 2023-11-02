@@ -9,6 +9,11 @@ function MovieList(props) {
 
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
+    const [page, setPage] = useState(1);
+
+    const loadMoreHandler = async () => {
+        setPage((prev) => prev + 1);
+    }
 
     const handleSearch = async () => {
         try {
@@ -23,13 +28,15 @@ function MovieList(props) {
 
     useEffect(() => {
         const getPopularMovies = async () => {
-            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMoviesListByType?searchType=${props.type}`);
+            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMoviesListByType?searchType=${props.type}&page=${page}`);
             if(data.message) {
-              setMovies(data.message.results.filter((item) => item.vote_count > 5));
+                const movieList = data.message.results.filter((item) => item.vote_count > 5);
+                const concatMovieList = movies.concat(movieList);
+                setMovies(concatMovieList);
             }
         }
         getPopularMovies();
-    }, []);
+    }, [page]);
 
     return (
         <>
@@ -57,6 +64,7 @@ function MovieList(props) {
                 </Link>
                 ))}
             </div>
+            {query === '' ? <button onClick={loadMoreHandler} className="load-more-button">Load more</button> : ''}
         </div>
         </>
     );
