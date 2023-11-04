@@ -68,10 +68,10 @@ function MovieList(props) {
         <Navigation/>
         <div className="App">
             <Typography variant="h2" gutterBottom className='home-title'>
-                Download Movies, Subtitles and explore movies!
+                Download Movies, Subtitles & Explore Movies!
             </Typography>
             <Typography variant="h6" paragraph className='home-subtitle'>
-                Search movies from our <span className='movie-count'>118,254</span> movies database. Download movie and subtitle for <span className='movie-count'>FREE</span>. Enjoy!
+                Search movies from our <span className='movie-count'>118,254</span> movies database. Download movie & subtitle for <span className='movie-count'>FREE</span>. Enjoy!
             </Typography>
             <div className="search-bar">
                 <input 
