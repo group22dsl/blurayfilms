@@ -2,7 +2,7 @@
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
-  background-color: #2E2E2E;
+  background-image: linear-gradient(to right, #1e1e1e, #020e32, #262740);
 }
 
 .search-bar {
@@ -12,8 +12,8 @@
   background-color: #f7f7f7;
   padding: 15px;
   border-radius: 25px;
-  width: 600px;
-  margin: 0 auto 40px auto;
+  width: 30%;
+  margin: 62px auto 62px auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -49,7 +49,6 @@
   justify-content: center;
   gap: 20px; /* Provides consistent spacing between items */
   padding: 20px;
-  background-color: #2E2E2E;
 }
 
 .movie {
@@ -57,6 +56,9 @@
   position: relative;
   width: 200px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
+  margin: 15px;
+  border-radius: 15px;
 }
 
 .movie:hover {
@@ -74,7 +76,6 @@
   bottom: 0;
   width: 100%;
   padding: 10px 0px 10px 0px;
-  background-color: rgba(0, 0, 0, 0.6);  /* Semi-transparent black */
   color: white;
   font-weight: 500;
   border-radius: 0 0 10px 10px;
@@ -184,7 +185,8 @@ body {
 
 /* Style the navigation bar */
 .navbar {
-  background-color: #333; /* Background color for the navigation bar */
+  /* background-image: linear-gradient(to right, #262740, #020e32, #1e1e1e); */
+  background-color: #191919; /* Background color for the navigation bar */
   color: #fff; /* Text color */
   padding: 10px 0; /* Vertical padding */
 }
@@ -340,5 +342,40 @@ body {
 
 .load-more-button {
   height: 60px;
-  width: 500px;
+  width: 20%;
+  border-radius: 10px;
+  border-style: none;
+  background-image: linear-gradient(45deg, #0bdaff, #fffcfc);
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.home-title {
+  color: white;
+  font-weight: 900 !important;
+  margin-top: 30px !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.home-subtitle {
+  color: white;
+}
+
+.movies-type-text{
+  color: white;
+  text-align: left;
+  padding-left: 75px;
+  font-size: 41px;
+}
+
+.movies-no-results-text{
+  font-size: 20px;
+  color: #47dbfb;
+  text-align: left;
+  padding-left: 75px;
+}
+
+.movie-count{
+  color: yellow;
+  font-weight: 900;
 }
