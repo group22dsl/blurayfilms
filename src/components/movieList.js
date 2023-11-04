@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 import Navigation from './navigation';
-import { Container, Typography, Button, Grid, Card, CardMedia, CardContent } from '@mui/material';
+import { Typography, Button } from '@mui/material';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 function MovieList(props) {
 
@@ -13,22 +14,32 @@ function MovieList(props) {
     const [page, setPage] = useState(1);
     const [movieTypeText, setMovieTypeText] = useState('Lastest movies');
     const [noResultText, setNoResultText] = useState(null);
+    const [totalResultCount, setTotalResultCount] = useState(0);
+    const [totalpageCount, setTotalPageCount] = useState(0);
 
     const loadMoreHandler = async () => {
         setPage((prev) => prev + 1);
     }
 
-    const handleSearch = async () => {
+    const handleSearch = async (fromLoadMore) => {
         setMovieTypeText(`Search results for "${query}"`);
         try {
-        const { data: movieList } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/searchMovieByKey?key=${query}`);
+        const { data: movieList } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/searchMovieByKey?key=${query}&page=${fromLoadMore ? page : 1}`);
         if(movieList && movieList.message) {
-            const moviesList = movieList.message.filter((item) => item.vote_count > 5);
+            const moviesList = movieList.message.results.filter((item) => item.vote_count > 5);
             if(moviesList.length === 0) {
-                setNoResultText(`Sorry we cannot find movies for "${query}". But you will like these movies.`)
+                setNoResultText(`Sorry we cannot find movies for "${query}". But you will like these movies.`);
+                setTotalResultCount(movieList.message.total_results);
             } else {
                 setNoResultText(null);
-                setMovies(moviesList);
+                if(fromLoadMore){
+                    setMovies((previouseMovies) => [...previouseMovies, ...moviesList]);
+                } else {
+                    setMovies(moviesList);
+                    setPage(1);
+                }
+                setTotalResultCount(movieList.message.total_results);
+                setTotalPageCount(movieList.message.total_pages);
             }
         }
         } catch (error) {
@@ -52,13 +63,20 @@ function MovieList(props) {
 
     useEffect(() => {
         const getPopularMovies = async () => {
-            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMoviesListByType?searchType=${props.type}&page=${page}`);
-            if(data.message) {
-                const movieList = data.message.results.filter((item) => item.vote_count > 5);
-                const concatMovieList = movies.concat(movieList);
-                setNoResultText(null);
-                setMovies(concatMovieList);
+            if (query === ''){
+                const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/getMoviesListByType?searchType=${props.type}&page=${page}`);
+                if(data.message) {
+                    const movieList = data.message.results.filter((item) => item.vote_count > 5);
+                    const concatMovieList = movies.concat(movieList);
+                    setNoResultText(null);
+                    setMovies(concatMovieList);
+                    setTotalResultCount(data.message.total_results);
+                    setTotalPageCount(data.message.total_pages);
+                }
+            } else {
+                handleSearch(true);
             }
+            
         }
         getPopularMovies();
     }, [page]);
@@ -71,7 +89,7 @@ function MovieList(props) {
                 Download Movies, Subtitles & Explore Movies!
             </Typography>
             <Typography variant="h6" paragraph className='home-subtitle'>
-                Search movies from our <span className='movie-count'>118,254</span> movies database. Download movie & subtitle for <span className='movie-count'>FREE</span>. Enjoy!
+                Search movies from our <span className='movie-count'>822,993</span> movies database. Download movie & subtitle for <span className='movie-count'>FREE</span>. Enjoy!
             </Typography>
             <div className="search-bar">
                 <input 
@@ -79,20 +97,10 @@ function MovieList(props) {
                 onChange={e => setQuery(e.target.value)} 
                 placeholder="Search for any movie..." 
                 />
-                <button onClick={handleSearch}>Search</button>
+                <button onClick={() => handleSearch(false)}>Search</button>
             </div>
-            {/* <div style={{ marginTop: '100px', textAlign: 'center' }}>
-                <Typography variant="h2" gutterBottom>
-                Welcome to Movie Paradise
-                </Typography>
-                <Typography variant="h6" color="textSecondary" paragraph>
-                Your ultimate destination for downloading the latest movies!
-                </Typography>
-                <Button variant="contained" color="primary" size="large">
-                Get Started
-                </Button>
-            </div> */}
             <h2 className='movies-type-text'>{movieTypeText}</h2>
+            <p className='movie-count-text'>Found {totalResultCount.toLocaleString()} movies</p>
             {noResultText?  <p className='movies-no-results-text'>{noResultText}</p> : null}
             <div className="movies-list">
                 {movies.map(movie => (
@@ -102,13 +110,14 @@ function MovieList(props) {
                     alt={movie.title}
                     />
                     <div>
+                        <div><Button className='download-button-on-list'><CloudDownloadIcon/>&nbsp;&nbsp;Download</Button></div>
                     {movie.title} ({movie.release_date.split('-')[0]})<br/><br/>
                     <span>IMDB: <b>{movie.vote_average.toFixed(1)}/10</b></span>
                     </div>
                 </Link>
                 ))}
             </div>
-            {query === '' ? <button onClick={loadMoreHandler} className="load-more-button">Load more...</button> : ''}
+            {totalpageCount > page ? <button onClick={loadMoreHandler} className="load-more-button">Load more...</button> : ''}
         </div>
         </>
     );

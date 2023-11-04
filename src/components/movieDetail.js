@@ -7,9 +7,11 @@ import '../App.css';
 import Navigation from './navigation';
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieSubtitles from './movieSubtitles';
+import { Grid } from '@mui/material';
 import {
     Button
   } from "reactstrap";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 function MovieDetail() {
 
@@ -91,125 +93,122 @@ function MovieDetail() {
     return (
         <>
         <Navigation/>
-        <div 
-            className="movie-detail" 
-            style={{ backgroundImage: `url(${process.env.REACT_APP_TMDB_IMAGE_URL}/original${movie.backdrop_path})` }}
-        >
-            <div className="movie-overlay"></div>
-            <div className="movie-content">
+        <Grid container spacing={2} className="movie-detail-body">
+            <Grid item xs={1} md={1} lg={1}>
+            </Grid>
+            <Grid item xs={2} md={1} lg={2}>
                 <div className='poster-content'>
                     <img 
                         src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
                         alt={movie.title} 
                         className="movie-poster"
                     />
-                    {/* <div className="movie-details-container">
-                        <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10</span>
-                        <span>Language: {languageName ? languageName : movie.original_language}</span>
-                    </div> */}
                 </div>
+            </Grid>
+            <Grid item xs={6} md={5} lg={5}>
                 <div className="movie-text">
                     <h1>{movie.title} - ({movie.release_date ? movie.release_date.split('-')[0] : ''})</h1>
                     <p>{movie.overview}</p>
                     <span>IMDB Rating: {movie.vote_average ? movie.vote_average.toFixed(1) : 0}/10</span>
                     <span>Language: {languageName ? languageName : movie.original_language}</span>
-                    <span>Torrent Link: <a href={torrentLink}>Download torrent magnet here</a></span>
+                    {/* <span>Torrent Link: <a href={torrentLink}>Download torrent magnet here</a></span> */}
                     {trailerKey && (
-                        <iframe 
+                        <iframe
+                            className='trailer-iframe'
                             title="YouTube Trailer"
                             width="100%" 
-                            height="500" 
+                            height="400" 
                             src={`https://www.youtube.com/embed/${trailerKey}`} 
                             frameBorder="0" 
                             allowFullScreen>
                         </iframe>
                     )}
                     {!isLoading && !isAuthenticated ? <Button
-                          id="loginBtn"
-                          color="primary"
-                          className="subtitle-login"
-                          onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}
-                        >
-                          Click here to <b>login</b> or <b>sign up</b> to download subtitles
+                        id="loginBtn"
+                        color="primary"
+                        className="subtitle-login"
+                        onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}
+                    >
+                        Click here to <b>login</b> or <b>sign up</b> to download subtitles
                     </Button> : <MovieSubtitles/>}
                 </div>
-                <div className="movie-stream">
-                   <div className="movie-stream-inside">
-                       <div className="watch-providers-container">
-                            <h2>Watch Providers</h2>
-                            <div className="select-box">
-                                <select className="modern-select" onChange={(e) => handleChange(e)}>
-                                    <option value=''>Select Region</option>
-                                    {regions.map(region => (
-                                        <option value={region.iso_3166_1}>{region.english_name}</option>
-                                    ))}
-                                </select>
-                                <div className="select-icon">
-                                    <i className="fas fa-chevron-down"></i>
-                                </div>
-                            </div>
-                            {selectedProviders && selectedProviders["flatrate"] && 
-                                <>
-                                    <h4>For Flat Rate</h4>
-                                    <div className="watch-provider-list">
-                                        {selectedProviders["flatrate"].map((provider) => (
-                                            <div key={provider.provider_name} className="watch-provider">
-                                            <img
-                                                src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                                                alt={`${provider.provider_name} Logo`}
-                                            />
-                                            </div>
-                                        ))}
-                                    </div>
-                                 </>
-                            }
-                            {selectedProviders && selectedProviders["buy"] && 
-                            <>
-                                <h4>For Buy</h4>
-                                    <div className="watch-provider-list">
-                                    {selectedProviders["buy"].map((provider) => (
-                                        <div key={provider.provider_name} className="watch-provider">
+            </Grid>
+            <Grid item xs={2} md={2} lg={3}>
+                <div className="watch-providers-container">
+                    <h2>Download Movie</h2>
+                    <div className="select-box">
+                        <div>
+                            {torrentFiles.map((torrent) => (
+                                <a href={torrent.url}><Button className="movie-download-button"><CloudDownloadIcon/> &nbsp;&nbsp;&nbsp;&nbsp;<b>Download {torrent.size} {torrent.video_codec} [{torrent.quality}] {torrent.type} file</b></Button></a>
+                            ))}
+                            <a href={torrentLink}><Button className="movie-download-button"><CloudDownloadIcon/> &nbsp;&nbsp;&nbsp;&nbsp;<b>Download movie as magnet file</b></Button></a>
+                        </div>
+                    </div>  
+                </div>
+                <div className="watch-providers-container">
+                    <h2>Watch Providers</h2>
+                    <div className="select-box">
+                        <select className="modern-select" onChange={(e) => handleChange(e)}>
+                            <option value=''>Select Region</option>
+                            {regions.map(region => (
+                                <option value={region.iso_3166_1}>{region.english_name}</option>
+                            ))}
+                        </select>
+                        <div className="select-icon">
+                            <i className="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    {selectedProviders && selectedProviders["flatrate"] && 
+                        <>
+                            <h4>For Flat Rate</h4>
+                            <div className="watch-provider-list">
+                                {selectedProviders["flatrate"].map((provider) => (
+                                    <div key={provider.provider_name} className="watch-provider">
                                         <img
                                             src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
                                             alt={`${provider.provider_name} Logo`}
                                         />
-                                        </div>
-                                    ))}
-                                </div>
-                            </>
-                            }
-                             {selectedProviders && selectedProviders["rent"] && 
-                             <>
-                                <h4>For Rent</h4>
-                                <div className="watch-provider-list">
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    }
+                    {selectedProviders && selectedProviders["buy"] && 
+                        <>
+                            <h4>For Buy</h4>
+                            <div className="watch-provider-list">
+                                {selectedProviders["buy"].map((provider) => (
+                                     <div key={provider.provider_name} className="watch-provider">
+                                         <img
+                                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                            alt={`${provider.provider_name} Logo`}
+                                        />
+                                    </div>
+                                 ))}
+                            </div>
+                        </>
+                    }
+                    {selectedProviders && selectedProviders["rent"] && 
+                        <>
+                            <h4>For Rent</h4>
+                            <div className="watch-provider-list">
                                     
                                 {selectedProviders["rent"].map((provider) => (
                                     <div key={provider.provider_name} className="watch-provider">
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                                        alt={`${provider.provider_name} Logo`}
-                                    />
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                                            alt={`${provider.provider_name} Logo`}
+                                        />
                                     </div>
                                 ))}
-                                </div>
-                            </>
-                            }
-                        </div>
-                        <div className="watch-providers-container">
-                            <h2>Download Movie</h2>
-                            <div className="select-box">
-                                <div>
-                                        {torrentFiles.map((torrent) => (
-                                        <a href={torrent.url}><Button className="movie-download-button">{torrent.size} {torrent.video_codec} [{torrent.quality}] {torrent.type}</Button></a>
-                                        ))}
-                                </div>
                             </div>
-                           
-                        </div>
-                   </div>
+                        </>
+                    }
                 </div>
-            </div>
-        </div>
+            </Grid>
+            <Grid item xs={1} md={1} lg={1}>
+            </Grid>
+        </Grid>
         </>
     );
 }
