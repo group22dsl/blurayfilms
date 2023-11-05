@@ -17,10 +17,10 @@ const App = () => {
     <Router history={history}>
       <Routes>
         <Route path="/" element={<MovieList type=''/>} />
-        <Route path="/now-playing" element={<MovieList type='now_playing'/>} />
-        <Route path="/popular" element={<MovieList type='popular'/>} />
-        <Route path="/top-rated" element={<MovieList type='top_rated'/>} />
-        <Route path="/upcoming" element={<MovieList type='upcoming'/>} />
+        <Route path="/now-playing-movies" element={<MovieList type='now_playing'/>} />
+        <Route path="/popular-movies" element={<MovieList type='popular'/>} />
+        <Route path="/top-rated-movies" element={<MovieList type='top_rated'/>} />
+        <Route path="/upcoming-movies" element={<MovieList type='upcoming'/>} />
         <Route path="/movie/:id/:title" element={<MovieDetail />} />
       </Routes>
     </Router>

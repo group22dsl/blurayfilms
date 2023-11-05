@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import langs from 'langs';
 import '../App.css';
-import Navigation from './navigation';
+import Nav from './nav';
 import { useAuth0 } from "@auth0/auth0-react";
 import MovieSubtitles from './movieSubtitles';
 import { Grid } from '@mui/material';
@@ -92,11 +92,11 @@ function MovieDetail() {
 
     return (
         <>
-        <Navigation/>
+        <Nav/>
         <Grid container spacing={2} className="movie-detail-body">
-            <Grid item xs={1} md={1} lg={1}>
+            <Grid item xs={12} md={12} lg={1}>
             </Grid>
-            <Grid item xs={2} md={1} lg={2}>
+            <Grid item xs={12} md={3} lg={2}>
                 <div className='poster-content'>
                     <img 
                         src={`${process.env.REACT_APP_TMDB_IMAGE_URL}/w500${movie.poster_path}`} 
@@ -105,7 +105,7 @@ function MovieDetail() {
                     />
                 </div>
             </Grid>
-            <Grid item xs={6} md={5} lg={5}>
+            <Grid item xs={12} md={9} lg={5}>
                 <div className="movie-text">
                     <h1>{movie.title} - ({movie.release_date ? movie.release_date.split('-')[0] : ''})</h1>
                     <p>{movie.overview}</p>
@@ -133,7 +133,7 @@ function MovieDetail() {
                     </Button> : <MovieSubtitles/>}
                 </div>
             </Grid>
-            <Grid item xs={2} md={2} lg={3}>
+            <Grid item xs={12} md={12} lg={3}>
                 <div className="watch-providers-container">
                     <h2>Download Movie</h2>
                     <div className="select-box">
@@ -206,7 +206,7 @@ function MovieDetail() {
                     }
                 </div>
             </Grid>
-            <Grid item xs={1} md={1} lg={1}>
+            <Grid item xs={12} md={12} lg={1}>
             </Grid>
         </Grid>
         </>

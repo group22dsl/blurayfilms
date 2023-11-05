@@ -6,11 +6,24 @@
   min-height: 100vh;
 }
 
+.nav-body{
+  background-image: linear-gradient(to right, #242424, #02091f, #1a1b2c);
+}
+
+.nav-links a{
+  text-decoration: none;
+}
+
+.profile-picture img{
+  margin-bottom: 0px !important;
+}
+
 .movie-detail-body {
   font-family: Arial, sans-serif;
   padding: 40px;
   background-image: linear-gradient(to right, #1e1e1e, #020e32, #262740);
   min-height: 100vh;
+  margin-top: 0px !important;
 }
 
 .trailer-iframe{
@@ -80,6 +93,11 @@
   box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
   margin: 15px;
   border-radius: 15px;
+}
+
+.mobile-nav-links {
+  text-decoration: none;
+  color: black;
 }
 
 .movie:hover {
@@ -359,6 +377,7 @@ body {
 
 .logo-img {
   height: 35px;
+  margin-bottom: 0px !important;
 }
 
 .load-more-button {

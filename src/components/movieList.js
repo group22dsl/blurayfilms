@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
-import Navigation from './navigation';
 import { Typography, Button } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import Nav from './nav';
 
 function MovieList(props) {
 
@@ -83,7 +83,7 @@ function MovieList(props) {
 
     return (
         <>
-        <Navigation/>
+        <Nav/>
         <div className="App">
             <Typography variant="h2" gutterBottom className='home-title'>
                 Download Movies, Subtitles & Explore Movies!
@@ -94,7 +94,12 @@ function MovieList(props) {
             <div className="search-bar">
                 <input 
                 value={query} 
-                onChange={e => setQuery(e.target.value)} 
+                onChange={e => setQuery(e.target.value)}
+                onKeyPress={(event) => {
+                    if (event.key === 'Enter') {
+                        handleSearch(false);
+                    }
+                }}
                 placeholder="Search for any movie..." 
                 />
                 <button onClick={() => handleSearch(false)}>Search</button>
