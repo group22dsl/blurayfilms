@@ -151,6 +151,16 @@ function MovieDetail() {
                     </div>  
                 </div>
                 <div className="watch-providers-container">
+                    <h2>Disclaimer</h2>
+                    <div className="disclaimer-box">
+                    <p>ikmovies.com is a platform dedicated to movie enthusiasts, offering movie downloads, subtitle downloads, and an exploration of cinematic content. It's important to note that we do not claim ownership of the copyrights for the images and videos featured on our site.
+
+All images and videos are sourced from public domains or used with permission. If you are the rightful owner of any content displayed on our site and wish to have it removed, please contact us. We highly value the intellectual property rights of content creators, and we are committed to promptly addressing any concerns.
+
+Our goal is to provide a seamless and enjoyable experience for our users while respecting the original creators' rights. Proper attribution is given whenever possible. Thank you for choosing ikmovies.com for your movie-related needs.</p>
+                    </div>  
+                </div>
+                <div className="watch-providers-container">
                     <h2>Watch Providers</h2>
                     <div className="select-box">
                         <select className="modern-select" onChange={(e) => handleChange(e)}>
