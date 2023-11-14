@@ -12,6 +12,7 @@ import {
     Button
   } from "reactstrap";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import { Helmet } from 'react-helmet';
 
 function MovieDetail() {
 
@@ -92,6 +93,10 @@ function MovieDetail() {
 
     return (
         <>
+        <Helmet>
+            <title>Download movie or subtitle for {movie.title} - ({movie.release_date ? movie.release_date.split('-')[0] : ''})</title>
+            <meta name="description" content={`${movie.title} - (${movie.release_date ? movie.release_date.split('-')[0] : ''}) - Download your favorite movies, subtitles, and explore detailed movie information. Your go-to source for high-quality entertainment.`} />
+        </Helmet>
         <Nav/>
         <Grid container spacing={2} className="movie-detail-body">
             <Grid item xs={12} md={12} lg={1}>
