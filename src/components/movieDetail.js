@@ -96,6 +96,7 @@ function MovieDetail() {
         <Helmet>
             <title>{`Download movie or subtitle for ${movie.title} - (${movie.release_date ? movie.release_date.split('-')[0] : ''})`}</title>
             <meta name="description" content={`${movie.title} - (${movie.release_date ? movie.release_date.split('-')[0] : ''}) - Download your favorite movies, subtitles, and explore detailed movie information. Your go-to source for high-quality entertainment.`} />
+            <meta name="keywords" content={movie.title} />
         </Helmet>
         <Nav/>
         <Grid container spacing={2} className="movie-detail-body">

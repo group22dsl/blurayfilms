@@ -6,6 +6,7 @@ import '../App.css';
 import { Typography, Button } from '@mui/material';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import Nav from './nav';
+import { Helmet } from 'react-helmet';
 
 function MovieList(props) {
 
@@ -83,6 +84,11 @@ function MovieList(props) {
 
     return (
         <>
+         <Helmet>
+            <title>ikmovies.com -{movieTypeText}</title>
+            <meta name="description" content={`IKMovies - Download Movies, Subtitles, and Explore Movie Details of ${movieTypeText}`} />
+            <meta name="keywords" content={movieTypeText} />
+        </Helmet>
         <Nav/>
         <div className="App">
             <Typography variant="h2" gutterBottom className='home-title'>

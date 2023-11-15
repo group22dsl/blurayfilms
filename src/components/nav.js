@@ -152,7 +152,7 @@ function Nav() {
                 Popular
               </Button>
               </a>
-              <a href='/now-playing-movies'>
+              <a href='/top-rated-movies'>
               <Button
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
